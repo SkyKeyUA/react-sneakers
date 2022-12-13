@@ -233,8 +233,10 @@ h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight: 400;}
 	padding: 40px;
 	border-bottom: 1px solid #EAEAEA;
 	&__left {
-		display: flex;
-		align-items: center;
+		a {
+			display: flex;
+			align-items: center;
+		}
 		img {
 			margin-right: 15px;
 		}

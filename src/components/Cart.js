@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 function Cart({ onClose, onRemove, items = [] }) {
 	return (
 		<div className="page__cart cart">
@@ -8,9 +9,9 @@ function Cart({ onClose, onRemove, items = [] }) {
 						<div className="cart__body"> <div className="cart__items">
 							{items.map((obj, index) => (
 								<div key={index} className="cart__item item-cart">
-									<a href="#"><img width={70} height={70} className="item-cart__image" src={obj.imageUrl} alt="sneakers" /></a>
+									<Link to='/'><img width={70} height={70} className="item-cart__image" src={obj.imageUrl} alt="sneakers" /></Link>
 									<div className="item-cart__text">
-										<p><a href="#">{obj.title}</a></p>
+										<p><Link to='/'>{obj.title}</Link></p>
 										<b>{obj.price} USD</b>
 									</div>
 									<img onClick={() => onRemove(obj.id)} className="item-cart__remove" src="/img/btnremove.svg" alt="remove" />
