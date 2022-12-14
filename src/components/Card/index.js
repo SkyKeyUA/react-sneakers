@@ -1,15 +1,15 @@
 import React from "react";
 import styles from "./Card.module.scss";
 import { Link } from 'react-router-dom';
-function Card({ title, price, imageUrl, onFavorite, onPlus }) {
+function Card({ id, title, price, imageUrl, onFavorite, onPlus, favourite = false }) {
 	const [isAdded, setIsAdded] = React.useState(false);
-	const [isFavorite, setIsFavorite] = React.useState(false);
+	const [isFavorite, setIsFavorite] = React.useState(favourite);
 	const onClickPlus = () => {
-		onPlus({ title, price, imageUrl });
+		onPlus({ id, title, price, imageUrl });
 		setIsAdded(!isAdded);
 	}
 	const onClickFavorite = () => {
-		onFavorite({ title, price, imageUrl });
+		onFavorite({ id, title, price, imageUrl });
 		setIsFavorite(!isFavorite);
 	}
 	return (

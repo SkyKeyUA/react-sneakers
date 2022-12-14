@@ -39,21 +39,34 @@ function App() {
 			setFavourites(res.data);
 		});
 	}, []);
-	const onAddtoCart = (obj) => {
-		axios.post('https://6388c77ed94a7e5040a6bb54.mockapi.io/cart', obj);
-		setCartItems(prev => [...prev, obj]);
+	const onAddtoCart = async (obj) => {
+		try {
+			if (cartItems.find(cartObj => cartObj.id == obj.id)) {
+				axios.delete(`https://6388c77ed94a7e5040a6bb54.mockapi.io/cart/${obj.id}`);
+				setCartItems(prev => prev.filter(item => item.id !== obj.id));
+			} else {
+				const { data } = await axios.post('https://6388c77ed94a7e5040a6bb54.mockapi.io/cart', obj);
+				setCartItems(prev => [...prev, data]);
+			}
+		} catch (error) {
+			alert("it doesn't add to Cart");
+		}
 	}
 	const onRemoveItem = (id) => {
 		axios.delete(`https://6388c77ed94a7e5040a6bb54.mockapi.io/cart/${id}`);
 		setCartItems(prev => prev.filter(item => item.id !== id));
 	}
-	const onAddToFavorite = (obj) => {
-		axios.post('https://6388c77ed94a7e5040a6bb54.mockapi.io/favourites', obj);
-		setFavourites(prev => [...prev, obj]);
-	}
-	const onRemoveToFavorite = (id) => {
-		axios.delete(`https://6388c77ed94a7e5040a6bb54.mockapi.io/favourites${id}`);
-		setFavourites(prev => prev.filter(item => item.id !== id));
+	const onAddToFavorite = async (obj) => {
+		try {
+			if (favourites.find(favObj => favObj.id == obj.id)) {
+				axios.delete(`https://6388c77ed94a7e5040a6bb54.mockapi.io/favourites/${obj.id}`);
+			} else {
+				const { data } = await axios.post('https://6388c77ed94a7e5040a6bb54.mockapi.io/favourites', obj);
+				setFavourites(prev => [...prev, data]);
+			}
+		} catch (error) {
+			alert("it doesn't add to favourites");
+		}
 	}
 	const onChangeSearchInput = (event) => {
 		setSearchValue(event.target.value);
@@ -73,6 +86,7 @@ function App() {
 				/>} />
 				<Route path="/favourites/*" element={<Favourites
 					items={favourites}
+					onAddToFavorite={onAddToFavorite}
 				/>} />
 			</Routes>
 		</div>
