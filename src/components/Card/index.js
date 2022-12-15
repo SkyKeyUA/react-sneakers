@@ -1,8 +1,8 @@
 import React from "react";
 import styles from "./Card.module.scss";
 import { Link } from 'react-router-dom';
-function Card({ id, title, price, imageUrl, onFavorite, onPlus, favourite = false }) {
-	const [isAdded, setIsAdded] = React.useState(false);
+function Card({ id, title, price, imageUrl, onFavorite, onPlus, favourite = false, added = false }) {
+	const [isAdded, setIsAdded] = React.useState(added);
 	const [isFavorite, setIsFavorite] = React.useState(favourite);
 	const onClickPlus = () => {
 		onPlus({ id, title, price, imageUrl });

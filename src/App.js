@@ -29,21 +29,32 @@ function App() {
 		// }).then(json => {
 		// 	setItems(json);
 		// });
-		axios.get('https://6388c77ed94a7e5040a6bb54.mockapi.io/items').then(res => {
-			setItems(res.data);
-		});
-		axios.get('https://6388c77ed94a7e5040a6bb54.mockapi.io/cart').then(res => {
-			setCartItems(res.data);
-		});
-		axios.get('https://6388c77ed94a7e5040a6bb54.mockapi.io/favourites').then(res => {
-			setFavourites(res.data);
-		});
+
+
+		// axios.get('https://6388c77ed94a7e5040a6bb54.mockapi.io/items').then(res => {
+		// 	setItems(res.data);
+		// });
+		// axios.get('https://6388c77ed94a7e5040a6bb54.mockapi.io/cart').then(res => {
+		// 	setCartItems(res.data);
+		// });
+		// axios.get('https://6388c77ed94a7e5040a6bb54.mockapi.io/favourites').then(res => {
+		// 	setFavourites(res.data);
+		// });
+		async function fetchData() {
+			const cartResponse = await axios.get('https://6388c77ed94a7e5040a6bb54.mockapi.io/cart');
+			const favouritesResponse = await axios.get('https://6388c77ed94a7e5040a6bb54.mockapi.io/favourites');
+			const itemsResponse = await axios.get('https://6388c77ed94a7e5040a6bb54.mockapi.io/items');
+			setCartItems(cartResponse.data);
+			setFavourites(favouritesResponse.data);
+			setItems(itemsResponse.data);
+		}
+		fetchData();
 	}, []);
 	const onAddtoCart = async (obj) => {
 		try {
-			if (cartItems.find(cartObj => cartObj.id == obj.id)) {
+			if (cartItems.find(cartObj => Number(cartObj.id) === Number(obj.id))) {
 				axios.delete(`https://6388c77ed94a7e5040a6bb54.mockapi.io/cart/${obj.id}`);
-				setCartItems(prev => prev.filter(item => item.id !== obj.id));
+				setCartItems(prev => prev.filter(item => Number(item.id) !== Number(obj.id)));
 			} else {
 				const { data } = await axios.post('https://6388c77ed94a7e5040a6bb54.mockapi.io/cart', obj);
 				setCartItems(prev => [...prev, data]);
@@ -78,6 +89,7 @@ function App() {
 			<Routes>
 				<Route path="/" element={<Home
 					items={items}
+					cartItems={cartItems}
 					searchValue={searchValue}
 					setSearchValue={setSearchValue}
 					onChangeSearchInput={onChangeSearchInput}

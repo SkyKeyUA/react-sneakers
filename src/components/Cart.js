@@ -7,8 +7,8 @@ function Cart({ onClose, onRemove, items = [] }) {
 				{
 					items.length > 0 ?
 						<div className="cart__body"> <div className="cart__items">
-							{items.map((obj, index) => (
-								<div key={index} className="cart__item item-cart">
+							{items.map((obj) => (
+								<div key={obj.id} className="cart__item item-cart">
 									<Link to='/'><img width={70} height={70} className="item-cart__image" src={obj.imageUrl} alt="sneakers" /></Link>
 									<div className="item-cart__text">
 										<p><Link to='/'>{obj.title}</Link></p>
