@@ -23,6 +23,7 @@ function App() {
 	const [favourites, setFavourites] = React.useState([]);
 	const [searchValue, setSearchValue] = React.useState('');
 	const [cartOpened, setCartOpened] = React.useState(false);
+	const [isLoading, setIsLoading] = React.useState(true);
 	React.useEffect(() => {
 		// fetch('https://6388c77ed94a7e5040a6bb54.mockapi.io/items').then((res) => {
 		// 	return res.json();
@@ -41,9 +42,13 @@ function App() {
 		// 	setFavourites(res.data);
 		// });
 		async function fetchData() {
+			//setIsLoading(true);
 			const cartResponse = await axios.get('https://6388c77ed94a7e5040a6bb54.mockapi.io/cart');
 			const favouritesResponse = await axios.get('https://6388c77ed94a7e5040a6bb54.mockapi.io/favourites');
 			const itemsResponse = await axios.get('https://6388c77ed94a7e5040a6bb54.mockapi.io/items');
+
+			setIsLoading(false);
+
 			setCartItems(cartResponse.data);
 			setFavourites(favouritesResponse.data);
 			setItems(itemsResponse.data);
@@ -95,6 +100,7 @@ function App() {
 					onChangeSearchInput={onChangeSearchInput}
 					onAddtoCart={onAddtoCart}
 					onAddToFavorite={onAddToFavorite}
+					isLoading={isLoading}
 				/>} />
 				<Route path="/favourites/*" element={<Favourites
 					items={favourites}
