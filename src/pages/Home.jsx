@@ -1,8 +1,17 @@
 import Card from "../components/Card"
-function Home({ cartItems, items, searchValue, setSearchValue, onChangeSearchInput, onAddToFavorite, onAddtoCart, isLoading }) {
+function Home({
+	cartItems,
+	items,
+	searchValue,
+	setSearchValue,
+	onChangeSearchInput,
+	onAddToFavorite,
+	onAddtoCart,
+	isLoading
+}) {
 	const renderItems = () => {
-		const filteredItems = items.filter((item) => item.title.toLowerCase().includes(searchValue.toLowerCase()),);
-		return (isLoading ? [...Array(12)] : filteredItems).map((item, index) => (
+		const filtredItems = items.filter((item) => item.title.toLowerCase().includes(searchValue.toLowerCase()));
+		return (isLoading ? [...Array(12)] : filtredItems).map((item, index) => (
 			<Card
 				key={index}
 				// title={item.title}
@@ -16,7 +25,6 @@ function Home({ cartItems, items, searchValue, setSearchValue, onChangeSearchInp
 				{...item}
 			/>
 		))
-
 	}
 	return (
 		<section className="content">
@@ -28,7 +36,9 @@ function Home({ cartItems, items, searchValue, setSearchValue, onChangeSearchInp
 					<input onChange={onChangeSearchInput} value={searchValue} placeholder="Search..." />
 				</div>
 			</div>
-			<div className="content__items">{renderItems()}</div>
+			<div className="content__items">
+				{renderItems()}
+			</div>
 		</section>
 	)
 }
