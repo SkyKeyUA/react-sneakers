@@ -1,5 +1,17 @@
+import axios from 'axios';
+import React from 'react';
 import { Link } from 'react-router-dom';
+import AppContext from '../context';
+import Info from './Info';
 function Cart({ onClose, onRemove, items = [] }) {
+	const { cartItems, setCartItems } = React.useContext(AppContext);
+	const [isOrderComplete, setIsOrderComplete] = React.useState(false);
+
+	const onClickOrder = () => {
+		axios.post('https://6388c77ed94a7e5040a6bb54.mockapi.io/orders', cartItems);
+		setIsOrderComplete(true);
+		setCartItems([]);
+	}
 	return (
 		<div className="page__cart cart">
 			<div className="cart__right">
@@ -31,17 +43,11 @@ function Cart({ onClose, onRemove, items = [] }) {
 										<b>22.5 USD</b>
 									</li>
 								</ul>
-								<button className="cart__checkout cart__checkout_arrow">Checkout <img src="/img/arrow.svg" alt="arrow" /></button>
-							</div></div> :
-						<div className="cart__empty empty-cart">
-							<img className="empty-cart__image" src="/empty-cart.jpg" alt="Empty" />
-							<h2 className="empty-cart__title">Cart is Empty</h2>
-							<p className="empty-cart__text">Add at least one pair of <br /> sneakers to your order</p>
-							<button onClick={onClose} className="empty-cart__btn">
-								<img src="/img/arrow.svg" alt="Arrow" />
-								Go back
-							</button>
-						</div>
+								<button onClick={onClickOrder} className="cart__checkout cart__checkout_arrow">Checkout <img src="/img/arrow.svg" alt="arrow" /></button>
+							</div></div> : <Info
+							title={isOrderComplete ? "Order confirmed!" : "Cart is Empty"}
+							description={isOrderComplete ? "Your order №18 will be quickly transferred to courier delivery" : "Add at least one pair of sneakers to your order"}
+							image={isOrderComplete ? "complete-order.jpg" : "/empty-cart.jpg"} />
 				}
 			</div>
 		</div>

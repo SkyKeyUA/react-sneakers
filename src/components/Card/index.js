@@ -2,6 +2,7 @@ import React from "react";
 import ContentLoader from "react-content-loader";
 import styles from "./Card.module.scss";
 import { Link } from 'react-router-dom';
+import AppContext from "../../context";
 function Card({
 	id,
 	title,
@@ -10,14 +11,12 @@ function Card({
 	onFavorite,
 	onPlus,
 	favourite = false,
-	added = false,
 	loading = false
 }) {
-	const [isAdded, setIsAdded] = React.useState(added);
+	const { isItemAdded } = React.useContext(AppContext);
 	const [isFavorite, setIsFavorite] = React.useState(favourite);
 	const onClickPlus = () => {
 		onPlus({ id, title, price, imageUrl });
-		setIsAdded(!isAdded);
 	}
 	const onClickFavorite = () => {
 		onFavorite({ id, title, price, imageUrl });
@@ -52,7 +51,7 @@ function Card({
 						<Link to='/'><img className={styles["card-sneakers__image"]} width={133} height={112} src={imageUrl} alt="Plus" /></Link>
 						<h5 className={styles["card-sneakers__text"]}><Link to='/'>{title}</Link></h5>
 						<div className={styles["card-sneakers__items"]}><div className={styles["card-sneakers__item"]}><span className={styles["card-sneakers__price"]}>Price:</span><b>{price} USD</b></div>
-							{isAdded ? <img className={styles["card-sneakers__btncheked"]} width={32} height={32} src={"/img/btncheked.svg"} alt="" onClick={onClickPlus} /> :
+							{isItemAdded(id) ? <img className={styles["card-sneakers__btncheked"]} width={32} height={32} src={"/img/btncheked.svg"} alt="" onClick={onClickPlus} /> :
 								<button className={styles["card-sneakers__btn"]} onClick={onClickPlus}>
 									<span></span><span></span>
 								</button>}

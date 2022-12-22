@@ -2,8 +2,8 @@ import React from 'react';
 import Card from '../components/Card';
 import AppContext from '../context';
 //import { AppContext } from '../App';
-function Favourites({ onAddToFavorite }) {
-	const { favourites } = React.useContext(AppContext);
+function Favourites() {
+	const { favourites, onAddToFavorite } = React.useContext(AppContext);
 	return (
 		<section className="content">
 			<div className="content__top">

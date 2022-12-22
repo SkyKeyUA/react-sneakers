@@ -56,14 +56,14 @@ function App() {
 		}
 		fetchData();
 	}, []);
-	const onAddtoCart = async (obj) => {
+	const onAddtoCart = (obj) => {
 		try {
-			if (cartItems.find(cartObj => Number(cartObj.id) === Number(obj.id))) {
+			if (cartItems.find((item) => Number(item.id) === Number(obj.id))) {
 				axios.delete(`https://6388c77ed94a7e5040a6bb54.mockapi.io/cart/${obj.id}`);
-				setCartItems(prev => prev.filter(item => Number(item.id) !== Number(obj.id)));
+				setCartItems((prev) => prev.filter((item) => Number(item.id) !== Number(obj.id)));
 			} else {
-				const { data } = await axios.post('https://6388c77ed94a7e5040a6bb54.mockapi.io/cart', obj);
-				setCartItems(prev => [...prev, data]);
+				axios.post('https://6388c77ed94a7e5040a6bb54.mockapi.io/cart', obj);
+				setCartItems((prev) => [...prev, obj]);
 			}
 		} catch (error) {
 			alert("it doesn't add to Cart");
@@ -77,6 +77,7 @@ function App() {
 		try {
 			if (favourites.find(favObj => favObj.id == obj.id)) {
 				axios.delete(`https://6388c77ed94a7e5040a6bb54.mockapi.io/favourites/${obj.id}`);
+				setFavourites(prev => prev.filter(item => Number(item.id) !== Number(obj.id)));
 			} else {
 				const { data } = await axios.post('https://6388c77ed94a7e5040a6bb54.mockapi.io/favourites', obj);
 				setFavourites(prev => [...prev, data]);
@@ -88,8 +89,11 @@ function App() {
 	const onChangeSearchInput = (event) => {
 		setSearchValue(event.target.value);
 	}
+	const isItemAdded = (id) => {
+		return cartItems.some(obj => Number(obj.id) === Number(id));
+	}
 	return (
-		<AppContext.Provider value={{ items, cartItems, favourites }}>
+		<AppContext.Provider value={{ items, cartItems, favourites, isItemAdded, onAddToFavorite, setCartOpened, setCartItems }}>
 			<div className="wrapper">
 				{cartOpened && <Cart items={cartItems} onClose={() => setCartOpened(false)} onRemove={onRemoveItem} />}
 				<Header onClickCart={() => setCartOpened(true)} />
@@ -104,7 +108,7 @@ function App() {
 						onAddToFavorite={onAddToFavorite}
 						isLoading={isLoading}
 					/>} />
-					<Route path="/favourites/*" element={<Favourites onAddToFavorite={onAddToFavorite}
+					<Route path="/favourites/*" element={<Favourites
 					/>} />
 				</Routes>
 			</div>
