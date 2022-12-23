@@ -3,14 +3,35 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import AppContext from '../context';
 import Info from './Info';
+
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 function Cart({ onClose, onRemove, items = [] }) {
 	const { cartItems, setCartItems } = React.useContext(AppContext);
 	const [isOrderComplete, setIsOrderComplete] = React.useState(false);
+	const [isLoading, setIsLoading] = React.useState(false);
+	const [orderId, setOrderId] = React.useState(null);
 
-	const onClickOrder = () => {
-		axios.post('https://6388c77ed94a7e5040a6bb54.mockapi.io/orders', cartItems);
-		setIsOrderComplete(true);
-		setCartItems([]);
+	const onClickOrder = async () => {
+		try {
+			setIsLoading(true);
+			const { data } = await axios.post('https://6388c77ed94a7e5040a6bb54.mockapi.io/orders', {
+				items: cartItems
+			});
+			//await axios.put('https://6388c77ed94a7e5040a6bb54.mockapi.io/cart', []);
+			setOrderId(data.id);
+			setIsOrderComplete(true);
+			setCartItems([]);
+			for (let i = 0; i < cartItems.length; i++) {
+				const item = cartItems[i];
+				await axios.delete('https://6388c77ed94a7e5040a6bb54.mockapi.io/cart/' + item.id);
+				await delay(1000);
+			}
+			// for - crutch because mockapi does not have this function
+		} catch (error) {
+			alert('order is failed');
+		}
+		setIsLoading(false);
 	}
 	return (
 		<div className="page__cart cart">
@@ -43,10 +64,10 @@ function Cart({ onClose, onRemove, items = [] }) {
 										<b>22.5 USD</b>
 									</li>
 								</ul>
-								<button onClick={onClickOrder} className="cart__checkout cart__checkout_arrow">Checkout <img src="/img/arrow.svg" alt="arrow" /></button>
+								<button disabled={isLoading} onClick={onClickOrder} className="cart__checkout cart__checkout_arrow">Checkout <img src="/img/arrow.svg" alt="arrow" /></button>
 							</div></div> : <Info
 							title={isOrderComplete ? "Order confirmed!" : "Cart is Empty"}
-							description={isOrderComplete ? "Your order №18 will be quickly transferred to courier delivery" : "Add at least one pair of sneakers to your order"}
+							description={isOrderComplete ? `Your order №${orderId} will be quickly transferred to courier delivery` : "Add at least one pair of sneakers to your order"}
 							image={isOrderComplete ? "complete-order.jpg" : "/empty-cart.jpg"} />
 				}
 			</div>
