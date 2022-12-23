@@ -11,7 +11,7 @@ function Cart({ onClose, onRemove, items = [] }) {
 	const [isOrderComplete, setIsOrderComplete] = React.useState(false);
 	const [isLoading, setIsLoading] = React.useState(false);
 	const [orderId, setOrderId] = React.useState(null);
-
+	const totalPrice = cartItems.reduce((sum, obj) => obj.price + sum, 0);
 	const onClickOrder = async () => {
 		try {
 			setIsLoading(true);
@@ -56,12 +56,12 @@ function Cart({ onClose, onRemove, items = [] }) {
 									<li className="total-cart__item">
 										<span>Total:</span>
 										<div></div>
-										<b>450 USD</b>
+										<b>{totalPrice} USD</b>
 									</li>
 									<li className="total-cart__item">
 										<span>Tax 5%:</span>
 										<div></div>
-										<b>22.5 USD</b>
+										<b>{Math.round(totalPrice * 5) / 100} USD</b>
 									</li>
 								</ul>
 								<button disabled={isLoading} onClick={onClickOrder} className="cart__checkout cart__checkout_arrow">Checkout <img src="/img/arrow.svg" alt="arrow" /></button>
