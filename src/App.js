@@ -4,6 +4,7 @@ import axios from 'axios';
 import Header from './components/Header';
 import Cart from './components/Cart';
 import Favourites from './pages/Favourites';
+import Orders from './pages/Orders';
 import Home from './pages/Home';
 import AppContext from './context';
 // const cardSneakers = [
@@ -93,7 +94,16 @@ function App() {
 		return cartItems.some(obj => Number(obj.id) === Number(id));
 	}
 	return (
-		<AppContext.Provider value={{ items, cartItems, favourites, isItemAdded, onAddToFavorite, setCartOpened, setCartItems }}>
+		<AppContext.Provider value={{
+			items,
+			cartItems,
+			favourites,
+			isItemAdded,
+			onAddToFavorite,
+			onAddtoCart,
+			setCartOpened,
+			setCartItems,
+		}}>
 			<div className="wrapper">
 				{cartOpened && <Cart items={cartItems} onClose={() => setCartOpened(false)} onRemove={onRemoveItem} />}
 				<Header onClickCart={() => setCartOpened(true)} />
@@ -109,6 +119,8 @@ function App() {
 						isLoading={isLoading}
 					/>} />
 					<Route path="/favourites/*" element={<Favourites
+					/>} />
+					<Route path="/orders/*" element={<Orders
 					/>} />
 				</Routes>
 			</div>
