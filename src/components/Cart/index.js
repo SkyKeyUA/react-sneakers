@@ -1,12 +1,15 @@
 import React from 'react';
 import axios from 'axios';
+
 import { Link } from 'react-router-dom';
-import Info from './Info';
-import { useCart } from '../hooks/useCart';
+import Info from '../Info';
+import { useCart } from '../../hooks/useCart';
+
+import styles from './Cart.module.scss'
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-function Cart({ onClose, onRemove, items = [] }) {
+function Cart({ onClose, onRemove, items = [], opened }) {
 	const { cartItems, setCartItems, totalPrice } = useCart();
 	const [isOrderComplete, setIsOrderComplete] = React.useState(false);
 	const [isLoading, setIsLoading] = React.useState(false);
@@ -34,8 +37,8 @@ function Cart({ onClose, onRemove, items = [] }) {
 		setIsLoading(false);
 	}
 	return (
-		<div className="page__cart cart">
-			<div className="cart__right">
+		<div className={`${styles.cart} ${opened ? styles.cart__open : ''}`}>
+			<div className={`${styles.cart__right}`}>
 				<h2>Cart <img onClick={onClose} className="item-cart__remove" src="/img/btnremove.svg" alt="close" /></h2>
 				{
 					items.length > 0 ?

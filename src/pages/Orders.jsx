@@ -16,7 +16,7 @@ function Orders() {
 				setIsLoading(false);
 			} catch (error) {
 				alert('Error Orders in Orders');
-				console.log(error);
+				console.error(error);
 			}
 		})();
 	}, []);
@@ -33,8 +33,6 @@ function Orders() {
 						// price={item.price}
 						// imageUrl={item.imageUrl}
 						// id={item.id}
-						onFavorite={(obj) => onAddToFavorite(obj)}
-						onPlus={(obj) => onAddtoCart(obj)}
 						loading={isLoading}
 						{...item}
 					/>
