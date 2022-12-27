@@ -49,10 +49,10 @@ function Card({
 						</svg>
 						</button>)
 						}
-						<Link to='/'><img className={styles["card-sneakers__image"]} width={133} height={112} src={imageUrl} alt="Plus" /></Link>
-						<h5 className={styles["card-sneakers__text"]}><Link to='/'>{title}</Link></h5>
+						<Link to=''><img className={styles["card-sneakers__image"]} width={133} height={112} src={imageUrl} alt="Plus" /></Link>
+						<h5 className={styles["card-sneakers__text"]}><Link to=''>{title}</Link></h5>
 						<div className={styles["card-sneakers__items"]}><div className={styles["card-sneakers__item"]}><span className={styles["card-sneakers__price"]}>Price:</span><b>{price} USD</b></div>
-							{onPlus && (isItemAdded(id) ? <img className={styles["card-sneakers__btncheked"]} width={32} height={32} src={"/img/btncheked.svg"} alt="" onClick={onClickPlus} /> :
+							{onPlus && (isItemAdded(id) ? <img className={styles["card-sneakers__btncheked"]} width={32} height={32} src={"img/btncheked.svg"} alt="" onClick={onClickPlus} /> :
 								<button className={styles["card-sneakers__btn"]} onClick={onClickPlus}>
 									<span></span><span></span>
 								</button>)}

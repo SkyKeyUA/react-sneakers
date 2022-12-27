@@ -145,9 +145,9 @@ function App() {
 						onAddToFavorite={onAddToFavorite}
 						isLoading={isLoading}
 					/>} />
-					<Route path="/favourites/*" element={<Favourites
+					<Route path="favourites/" element={<Favourites
 					/>} />
-					<Route path="/orders/*" element={<Orders
+					<Route path="orders/" element={<Orders
 					/>} />
 				</Routes>
 			</div>

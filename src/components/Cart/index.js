@@ -39,18 +39,18 @@ function Cart({ onClose, onRemove, items = [], opened }) {
 	return (
 		<div className={`${styles.cart} ${opened ? styles.cart__open : ''}`}>
 			<div className={`${styles.cart__right}`}>
-				<h2>Cart <img onClick={onClose} className="item-cart__remove" src="/img/btnremove.svg" alt="close" /></h2>
+				<h2>Cart <img onClick={onClose} className="item-cart__remove" src="img/btnremove.svg" alt="close" /></h2>
 				{
 					items.length > 0 ?
 						<div className="cart__body"> <div className="cart__items">
 							{items.map((obj) => (
 								<div key={obj.id} className="cart__item item-cart">
-									<Link to='/'><img width={70} height={70} className="item-cart__image" src={obj.imageUrl} alt="sneakers" /></Link>
+									<Link to=''><img width={70} height={70} className="item-cart__image" src={obj.imageUrl} alt="sneakers" /></Link>
 									<div className="item-cart__text">
-										<p><Link to='/'>{obj.title}</Link></p>
+										<p><Link to=''>{obj.title}</Link></p>
 										<b>{obj.price} USD</b>
 									</div>
-									<img onClick={() => onRemove(obj.id)} className="item-cart__remove" src="/img/btnremove.svg" alt="remove" />
+									<img onClick={() => onRemove(obj.id)} className="item-cart__remove" src="img/btnremove.svg" alt="remove" />
 								</div>
 							))}
 						</div>
@@ -67,11 +67,11 @@ function Cart({ onClose, onRemove, items = [], opened }) {
 										<b>{Math.round(totalPrice * 5) / 100} USD</b>
 									</li>
 								</ul>
-								<button disabled={isLoading} onClick={onClickOrder} className="cart__checkout cart__checkout_arrow">Checkout <img src="/img/arrow.svg" alt="arrow" /></button>
+								<button disabled={isLoading} onClick={onClickOrder} className="cart__checkout cart__checkout_arrow">Checkout <img src="img/arrow.svg" alt="arrow" /></button>
 							</div></div> : <Info
 							title={isOrderComplete ? "Order confirmed!" : "Cart is Empty"}
 							description={isOrderComplete ? `Your order №${orderId} will be quickly transferred to courier delivery` : "Add at least one pair of sneakers to your order"}
-							image={isOrderComplete ? "complete-order.jpg" : "/empty-cart.jpg"} />
+							image={isOrderComplete ? "complete-order.jpg" : "empty-cart.jpg"} />
 				}
 			</div>
 		</div>

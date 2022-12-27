@@ -1,5 +1,7 @@
 import React from "react";
-import Card from "../components/Card"
+import Card from "../components/Card";
+
+import { Link } from 'react-router-dom';
 function Home({
 	items,
 	searchValue,
@@ -28,10 +30,10 @@ function Home({
 	return (
 		<section className="content">
 			<div className="content__top">
-				<h1 className="content__title"><a href="#">{searchValue ? `Search Results: "${searchValue}"` : 'All sneakers'}</a></h1>
+				<h1 className="content__title"><Link to=''>{searchValue ? `Search Results: "${searchValue}"` : 'All sneakers'}</Link></h1>
 				<div className="content__search">
-					<img src="/img/search.svg" alt="search" />
-					{searchValue && <img onClick={() => setSearchValue('')} className="item-cart__remove" src="/img/btnremove.svg" alt="Clear" />}
+					<img src="img/search.svg" alt="search" />
+					{searchValue && <img onClick={() => setSearchValue('')} className="item-cart__remove" src="img/btnremove.svg" alt="Clear" />}
 					<input onChange={onChangeSearchInput} value={searchValue} placeholder="Search..." />
 				</div>
 			</div>

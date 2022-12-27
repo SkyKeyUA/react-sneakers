@@ -15,7 +15,7 @@ function Favourites() {
 						key={index}
 						// title={item.title}
 						// price={item.price}
-						// imageUrl={item.imageUrl}
+						imageUrl={item.imageUrl}
 						// id={item.id}
 						favourite={true}
 						onFavorite={onAddToFavorite}
